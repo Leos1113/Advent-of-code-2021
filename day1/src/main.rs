@@ -10,15 +10,15 @@ fn main() {
         .flat_map(|line| line.parse::<i32>())
         .collect();
 
-    println!("part 1 -> times incremented: {}", part1(numbers.clone()));
-    println!("part 2 -> times incremented: {}", part2(numbers.clone()));
+    println!("part 1 -> times incremented: {}", part1(&numbers));
+    println!("part 2 -> times incremented: {}", part2(&numbers));
 }
 
-fn part1(numbers: Vec<i32>) -> i32 {
+fn part1(numbers: &[i32]) -> i32 {
     let mut times_incremented = 0;
 
-    for (index, &number) in numbers.iter().enumerate() {
-        let curr_value: i32 = number;
+    for (index, number) in numbers.iter().enumerate() {
+        let curr_value: i32 = *number;
         let prev_value: i32 = if index == 0 {
             curr_value
         } else {
@@ -33,14 +33,14 @@ fn part1(numbers: Vec<i32>) -> i32 {
     times_incremented
 }
 
-fn part2(numbers: Vec<i32>) -> i32 {
+fn part2(numbers: &[i32]) -> i32 {
     let mut times_incremented = 0;
 
     let mut prev_value: i32 = numbers.iter().take(3).sum();
 
-    for (index, number) in numbers.iter().enumerate() {
-        if numbers.len() < index + 3 {
-            continue;
+    for index in 1..numbers.len() {
+        if index + 3 > numbers.len() {
+            break;
         }
 
         let curr_value: i32 = numbers[index..index + 3].iter().sum();
